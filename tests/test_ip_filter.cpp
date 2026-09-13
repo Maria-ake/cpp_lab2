@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-// Тест 1: Проверка парсинга IP-адреса
+
 TEST(IpFilterTest, ParseIp) {
     std::string line = "1.2.3.4\tignore\tignore";
     IpAddress ip = parse_ip(line);
@@ -17,7 +17,7 @@ TEST(IpFilterTest, ParseIp) {
     EXPECT_EQ(std::get<3>(ip), 4);
 }
 
-// Тест 2: Проверка сортировки (лексикографическая)
+
 TEST(IpFilterTest, SortOrder) {
     IpPool pool = {
         std::make_tuple(1, 2, 1, 1),
@@ -32,7 +32,7 @@ TEST(IpFilterTest, SortOrder) {
     EXPECT_EQ(std::get<1>(pool[2]), 1);
 }
 
-// Тест 3: Проверка фильтрации (первый байт == 1)
+
 TEST(IpFilterTest, FilterFirstByte) {
     IpPool pool = {
         std::make_tuple(1, 2, 3, 4),

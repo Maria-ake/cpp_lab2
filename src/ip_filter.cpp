@@ -4,11 +4,11 @@
 #include <algorithm>
 #include <functional>
 
-// Парсинг строки: извлекаем только text1 (IP) и игнорируем остальное
+
 IpAddress parse_ip(const std::string& line) {
     std::stringstream ss(line);
     std::string ip_part;
-    std::getline(ss, ip_part, '\t'); // Читаем до табуляции
+    std::getline(ss, ip_part, '\t'); 
 
     std::stringstream ip_stream(ip_part);
     std::string byte_str;
@@ -22,7 +22,7 @@ IpAddress parse_ip(const std::string& line) {
     return std::make_tuple(b1, b2, b3, b4);
 }
 
-// Печать пула IP-адресов
+
 void print_pool(const IpPool& pool) {
     for (const auto& ip : pool) {
         std::cout << static_cast<int>(std::get<0>(ip)) << "."
