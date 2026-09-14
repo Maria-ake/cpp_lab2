@@ -25,6 +25,18 @@ jobs:
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config Release
 
+    - name: Full debug info
+      shell: bash
+      run: |
+        echo "1. Repository structure"
+        find ${{github.workspace}} -type f -not -path '*/.git/*' | head -50
+        echo ""
+        echo "2. CMakeLists.txt content"
+        cat ${{github.workspace}}/CMakeLists.txt 2>/dev/null || echo "!!! CMakeLists.txt NOT FOUND !!!"
+        echo ""
+        echo "3. Build dir content"
+        ls -laR ${{github.workspace}}/build/ 2>/dev/null || echo "!!! build/ NOT CREATED !!!"
+
     - name: Run Tests
       working-directory: ${{github.workspace}}/build
       run: ctest -C Release --output-on-failure
