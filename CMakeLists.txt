@@ -17,7 +17,7 @@ add_library(ip_filter_lib src/ip_filter.cpp)
 target_include_directories(ip_filter_lib PUBLIC include)
 
 
-add_executable(hello_world src/main.cpp src/lib.cpp)
+add_executable(ip_filter src/main.cpp src/ip_filter.cpp)
 target_link_libraries(ip_filter PRIVATE ip_filter_lib)
 
 
