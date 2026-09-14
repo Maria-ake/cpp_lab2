@@ -33,5 +33,6 @@ jobs:
       with:
         name: hello-world-${{ matrix.os }}
         path: |
-          ${{github.workspace}}/build/Release/hello_world.exe
-          ${{github.workspace}}/build/hello_world
+          ${{github.workspace}}/build/**/hello_world
+          ${{github.workspace}}/build/**/hello_world.exe
+        if-no-files-found: warn
