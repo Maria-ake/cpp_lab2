@@ -2,22 +2,22 @@ name: Build and Test
 
 on:
   push:
-    branches: [ "main",  "feature/github_actions" ]
+    branches: [ "main", "master", "feature/github_actions" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
 
 permissions: write-all
 
 jobs:
   build:
-    name: Build on ${{ matrix.os }}s
+    name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v5
 
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release
@@ -25,26 +25,15 @@ jobs:
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config Release
 
-    - name: Full debug info
-      shell: bash
-      run: |
-        echo "1. Repository structure"
-        find ${{github.workspace}} -type f -not -path '*/.git/*' | head -50
-        echo ""
-        echo "2. CMakeLists.txt content"
-        cat ${{github.workspace}}/CMakeLists.txt 2>/dev/null || echo "!!! CMakeLists.txt NOT FOUND !!!"
-        echo ""
-        echo "3. Build dir content"
-        ls -laR ${{github.workspace}}/build/ 2>/dev/null || echo "!!! build/ NOT CREATED !!!"
-
     - name: Run Tests
       working-directory: ${{github.workspace}}/build
       run: ctest -C Release --output-on-failure
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v6
       with:
-        name: hello-world-${{ matrix.os }}
+        name: ip_filter-${{ matrix.os }}
         path: |
-          ${{github.workspace}}/build/**/hello_world
-          ${{github.workspace}}/build/**/hello_world.exe
+          ${{github.workspace}}/build/Release/ip_filter.exe
+          ${{github.workspace}}/build/ip_filter
         if-no-files-found: warn
